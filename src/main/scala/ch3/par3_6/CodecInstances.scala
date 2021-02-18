@@ -13,4 +13,5 @@ object CodecInstances {
 
   implicit val doubleCodec: Codec[Double] = stringCodec.imap(_.toDouble, v => v.toString)
 
+  implicit def boxCodec[A](implicit c: Codec[A]): Codec[Box[A]] =  c.imap[Box[A]](Box(_), _.value)
 }
