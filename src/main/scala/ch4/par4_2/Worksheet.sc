@@ -19,20 +19,5 @@ val list3 = Monad[List].map(list2)(a => a + 123)
 def sumSquare[F[_]: Monad](a: F[Int], b: F[Int]): F[Int] =
   a.flatMap(x => b.map(y => x*x + y*y))
 
-def sumSquare2[F[_]: Monad](a: F[Int], b: F[Int]): F[Int] =
-  for {
-    x <- a
-    y <- b
-  } yield x*x + y*y
-
-
 sumSquare(Option(3), Option(4))
 sumSquare(List(1, 2, 3), List(4, 5))
-
-sumSquare2(Option(3), Option(4))
-sumSquare2(List(1, 2, 3), List(4, 5))
-
-// sumSquare(1, 2) // no implicit found for parameter Monad[ScalaNumberProxy]
-
-import cats.Id
-sumSquare(3: Id[Int], 4: Id[Int])
